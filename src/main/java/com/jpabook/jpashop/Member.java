@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class Member {
 
-    @Id @GeneratedValue // 식별자 및 auto-increment로 만들어준다.
+    @Id @GeneratedValue // 식별자 및 값을 자동으로 넣어준다.
     private Long id;
     private String username;
 
