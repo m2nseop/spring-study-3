@@ -1,8 +1,11 @@
 package com.jpabook.jpashop.domain;
 
+import static jakarta.persistence.FetchType.*;
+
 import com.jpabook.jpashop.domain.item.Item;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -32,7 +35,7 @@ public class Category {
     // M2M은 중간 테이블을 명시해줘야한다.
     private List<Item> items = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "parent_id")
     private Category parent;
 
