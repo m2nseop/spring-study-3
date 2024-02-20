@@ -13,10 +13,11 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-@RunWith(SpringRunner.class) // springboot를 올려서 테스트
-@SpringBootTest // springboot를 올려서 테스트
+@RunWith(SpringRunner.class) // Junit 실행할 때 spring도 같이 엮어서 실행하겠다는 뜻
+@SpringBootTest // springboot를 띄운상태로 테스트하겠다는 뜻 // @Autowired등등을 위함
 @Transactional // rollback을 위함 // 실행한 로직에 대해 db저장 x
 // 왜 롤백해야하는가? // 테스트를 반복적으로 해야하므로 같은 코드를 반복적으로 했을 때 문제가 될 수 있는 코드들을 위해 롤백을 한다.
+// 물론 테스트 어노테이션과 같이 쓰일때만이다 ㅋㅋ
 public class MemberServiceTest {
 
     @Autowired MemberService memberService;
@@ -40,5 +41,42 @@ public class MemberServiceTest {
 //        em.flush(); // 영속성 컨텍스트가 insert 쿼리를 날림 // insert코드를 볼 수 있음
         assertEquals(member, memberRepository.findOne(saveId));
 
+    }
+
+    @Test
+    public void 중복_회원_예외() throws Exception{
+        // given
+        Member member1 = new Member();
+        member1.setName("kim");
+
+        Member member2 = new Member();
+        member2.setName("kim");
+
+        // when
+        memberService.join(member1);
+        try {
+            memberService.join(member2);
+        } catch (IllegalStateException e) {
+            return ;
+        }
+        // then
+        fail("예외가 발생해야 한다.");
+    }
+
+    // 위코드와 같다.
+    @Test(expected = IllegalStateException.class)
+    public void 중복_회원_예외2() throws Exception{
+        // given
+        Member member1 = new Member();
+        member1.setName("kim");
+
+        Member member2 = new Member();
+        member2.setName("kim");
+
+        // when
+        memberService.join(member1);
+        memberService.join(member2);
+        // then
+        fail("예외가 발생해야 한다.");
     }
 }
