@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class MemberRepository {
 
-    @PersistenceContext
+    @PersistenceContext // 스프링부트에서 @Autowired로 대체가능
     private EntityManager em;
 
     public void save(Member member) {
