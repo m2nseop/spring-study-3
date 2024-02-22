@@ -19,13 +19,17 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "orders") // 쿼리 예악어중 order by와 혼동되지 않도록 Orders로 설정
-@Getter
-@Setter
+@Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+// jpa를 사용하는데 생성자가 protected로 되어있다?
+// 아~ 직접생성하지 말고 다른(생성) 메서드를 이용해서 만들라는 뜻이구나~
 public class Order {
 
     @Id
