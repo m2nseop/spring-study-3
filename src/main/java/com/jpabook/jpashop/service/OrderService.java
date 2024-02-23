@@ -8,6 +8,7 @@ import com.jpabook.jpashop.domain.item.Item;
 import com.jpabook.jpashop.repository.ItemRepository;
 import com.jpabook.jpashop.repository.MemberRepository;
 import com.jpabook.jpashop.repository.OrderRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,5 +60,12 @@ public class OrderService {
         Order order = orderRepository.findOne(orderId);
         // 주문취소
         order.cancel();
+        // 무언가 따로 조취를 취하지 않아도 객체가 변경됨을 jpa가 감지하면 알아서 업데이트 쿼리가 날라간다.
+        // 원래 mybatis라면 업데이트 쿼리를 따로 작성해줘야하지만 jpa는 그렇지 않다. 이것이 jpa의 장점이다.
     }
+
+    // 검색
+//    public List<Order> findOrders(OrderSearch orderSearch) {
+//        return orderRepository.findAll(orderSearch);
+//    }
 }
