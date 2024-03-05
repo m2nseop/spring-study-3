@@ -60,7 +60,7 @@ public class ItemController {
     }
 
     @PostMapping("items/{itemId}/edit")
-    public String updateItem(@ModelAttribute("form") BookForm form) {
+    public String updateItem(@PathVariable("itemId") Long itemId, @ModelAttribute("form") BookForm form) {
 
         // 먼저 수정을 요청한 유저가 해당 아이템에 대한 수정 권한이 있는지 확인한다.
         // 준영속성 엔티티
